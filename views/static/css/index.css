@@ -1,0 +1,31 @@
+body{
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+.header{
+    margin: 10px 20px;
+}
+.btns{
+    float: right;
+}
+
+#content{
+    width: 100%;
+}
+.list{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.list li {
+    width: 25%;
+    overflow: hidden;
+}
+.list li img{
+    width: 100%;
+}
+
+.footer .copy{
+    text-align: center;
+}

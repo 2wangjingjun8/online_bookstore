@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>网上书城</title>
+    <link rel="stylesheet" href="./static/css/index.css">
+    <script src="/static/js/jquery-3.4.1.js"></script>
+    <script>
+        $(function(){
+            $(".addCart").click(function(){
+                //获取书籍ID
+                var book_id = $(this).attr("id")
+                var url = "/addCart"
+                var params = {book_id:book_id}
+                $.post(url,params,function(res){
+                    $("#bookTitle").text(res)
+                })
+            })
+        })
+    </script>
+</head>
+<body>
+    <header class="header">
+        <a href="/"><img src="./static/images/logo.png" class="logo" alt="logo"></a>
+        
+        <div class="btns">
+            {{if .IsLogin}}
+            欢迎{{.UserName}}光临小小书城
+            <a href="/showCart">购物车</a>
+            <a href="/getMyOrders">我的订单</a>
+            <a href="/logout">注销</a>
+            <a href="/">返回</a>
+            {{else}}
+            <a href="/pages/user/login.html">登录</a>
+            <a href="/pages/user/register.html">注册</a>
+            <a href="/showCart">购物车</a>
+            <a href="/pages/manage/manage.html">后台管理</a>
+            {{end}}
+        </div>
+
+    </header>
+    <div id="content">
+        <div style="text-align: center;">
+            <span style="color: red;" id="bookTitle"></span>
+        </div>
+        <form id="search" method="get" action="/" >
+            价格：<input type="text" name="minPrice"> -- <input type="text" name="maxPrice">  <input type="submit" value="搜索">
+        </form>
+        <ul class="list">
+            {{range .Books}}
+            <li>
+                <img src="{{.ImgPath}}" alt="">
+                <p>{{.BookName}}</p>
+                <p>库存：{{.Stock}} <span style="margin-left: 10px;">销量：{{.Sales}}</span> </p>
+                <p>价格：{{.Price}}</p>
+                {{if .Stock}}
+                <p> <button id="{{.ID}}" class="addCart">加入购物车</button> </p>
+                {{else}}
+                <p style="color: red;">小小拼命补货中...</p>
+                {{end}}
+            </li>
+            {{end}}
+        </ul>
+        <div id="pagination">
+            {{if .IsHasPre }}
+            <a href="/?&minPrice={{.MinPrice}}&maxPrice={{.MaxPrice}}">首页</a>
+            <a href="/?pageNo={{.GetPrePageNo}}&minPrice={{.MinPrice}}&maxPrice={{.MaxPrice}}">上一页</a>
+            {{end}}
+            当前页是第{{.CurrentPage}}页，共有{{.TotalPage}}页，共有{{.TotalNum}}记录数
+            {{if .IsHasNext }}
+            <a href="/?pageNo={{.GetNextPageNo}}&minPrice={{.MinPrice}}&maxPrice={{.MaxPrice}}">下一页</a>
+            <a href="/?pageNo={{.TotalPage}}&minPrice={{.MinPrice}}&maxPrice={{.MaxPrice}}">末页</a>
+            {{end}}
+            跳转到第 <input class="jumpToPageNo" type="text" value="{{.CurrentPage}}">页 <button id="page_btn">确定</button>
+        </div>
+        <script>
+            $("#page_btn").click(function(){
+                var jumpToPageNo = $(".jumpToPageNo").val();
+                location = "/?pageNo="+jumpToPageNo+"&minPrice={{.MinPrice}}&maxPrice={{.MaxPrice}}";
+            })
+        </script>
+    </div>
+    <footer class="footer">
+        <p class="copy">小小版权所有</p>
+    </footer>
+</body>
+</html>

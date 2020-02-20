@@ -1,0 +1,38 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图书管理</title>
+</head>
+<body>
+    <div>
+        <a href="/getPageBooks">图书管理</a>
+        <a href="/">返回商城</a>
+    </div>
+    <div id="content">
+        <form action="/editBook" method="post">
+            <input type="text" name="id" value="{{.ID}}" hidden>
+        <table class="table">
+            <tr>
+                <th>名称</th>
+                <th>价格</th>
+                <th>作者</th>
+                <th>销量</th>
+                <th>库存</th>
+                <th>操作</th>
+            </tr>
+            <tr>
+                <td> <input type="text" name="title" value="{{.BookName}}"> </td>
+                <td> <input type="text" name="price" value="{{.Price}}"> </td>
+                <td> <input type="text" name="author" value="{{.Author}}"> </td>
+                <td> <input type="text" name="sales" value="{{.Sales}}"> </td>
+                <td> <input type="text" name="stock" value="{{.Stock}}"> </td>
+                <td>
+                    <input type="submit" value="更新图书">
+                </td>
+            </tr>
+        </table>
+        </form>
+    </div>
+</body>
+</html>

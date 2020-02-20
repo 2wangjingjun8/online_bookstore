@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>购物车</title>
+    <style>
+        .btns{float: right;}
+        .header{margin: 10px 20px;}
+    </style>
+    <script src="/static/js/jquery-3.4.1.js"></script>
+    <script>
+        $(function(){
+            $("#delCart").click(function(){
+                return confirm("亲，真的要清空购物车吗？o(╥﹏╥)o")
+            })
+            $(".delCartItem").click(function(){
+                var title = $(this).attr("title")
+                return confirm("确定要删除【"+title+"】该购物项吗")
+            })
+            $(".edit_cartItem").change(function(){
+                var num = $(this).val();
+                var id = $(this).attr("cid");
+                // location="/editCartItem?cartItemID="+id+"&num="+num
+                var params = {cartItemID:id,num:num};
+                var url = "/editCartItem";
+                var amount = $(this).parent().next().next();
+                $.post(url,params,function(res){
+                    $("#totalCount").text(res.TotalCount)
+                    $("#totalAmount").text(res.TotalAmount)
+                    amount.text(res.Amount)
+                },"json")
+            })
+        })
+    </script>
+</head>
+<body>
+    <header class="header">
+        <a href="/"><img src="./static/images/logo.png" class="logo" alt="logo"></a>
+        
+        <div class="btns">
+            {{if .UserName}}
+            欢迎{{.UserName}}光临小小书城
+            <a href="/showCart">购物车</a>
+            <a href="/logout">注销</a>
+            <a href="/">返回</a>
+            {{else}}
+            <a href="/pages/user/login.html">登录</a>
+            <a href="/pages/user/register.html">注册</a>
+            <a href="/showCart">购物车</a>
+            <a href="/pages/manage/manage.html">后台管理</a>
+            {{end}}
+        </div>
+
+    </header>
+    <div id="content"  style="width: 800px;margin: 0 auto;text-align: center;">
+        {{if .CartItems }}
+        <h1>购物车</h1>
+        <table style="text-align: center;width: 100%;">
+            <tr>
+                <th>商品名称</th>
+                <th>数量</th>
+                <th>单价</th>
+                <th>金额</th>
+                <th>操作</th>
+            </tr>
+            {{range .CartItems}}
+            <tr>
+                <td>{{.Book.BookName}}</td>
+                <td> <input class="edit_cartItem" cid="{{.CartItemID}}" type="text" value="{{.Count}}" style="text-align: center;width: 50px;"> </td>
+                <td>{{.Book.Price}}</td>
+                <td>{{.Amount}}</td>
+                <td> <a title="{{.Book.BookName}}" class="delCartItem" href="/delCartItem?cartItemID={{.CartItemID}}">删除</a> </td>
+            </tr>
+            {{end}}
+        </table>
+        <div class="total">
+            <p>购物车总数量 <span id="totalCount">{{.TotalCount}}</span> 件，总金额是 ￥<span id="totalAmount">{{.TotalAmount}}</span>  元 <a href="">继续购物</a> 
+                <a href="/delCart?cartID={{.CartID}}" id="delCart">清空购物车</a> 
+                <a href="/checkout">去结账</a> </p>
+        </div>
+        {{else}}
+        <h1>购物车空空如也，请快去 <a href="/">购物</a> 吧</h1>
+        {{end}}
+    </div>
+
+</body>
+</html>

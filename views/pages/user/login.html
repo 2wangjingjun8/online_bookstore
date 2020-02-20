@@ -1,0 +1,25 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录</title>
+    <script src="/static/js/jquery-3.4.1.js"></script>
+    <script>
+        $(function(){
+            if("{{.}}" == "用户名或密码不正确"){
+                $("#errMsg").text("用户名或密码不正确");
+            }
+        })
+    </script>
+</head>
+<body>
+    <a href="/pages/user/register.html">注册</a>
+    <span id="errMsg">请输入用户名和密码</span>
+    <form action="/login" method="post">
+        <p>用户名： <input type="text" name="username" placeholder="请输入用户名"></p>
+        <p>密码： <input type="text" name="password" placeholder="请输入密码"></p>
+        <input type="submit" value="登录" >
+    </form>
+    
+</body>
+</html>

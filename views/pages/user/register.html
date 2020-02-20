@@ -1,0 +1,33 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>注册</title>
+    <script src="/static/js/jquery-3.4.1.js"></script>
+    <script>
+        $(function(){
+            $("#username").change(function(){
+                var url = "/checkUsername";
+                var username = $("#username").val();
+                var params = {username:username};
+                $.post(url,params,function(res){
+                    $("#errMsg").html(res);
+                })
+
+            })
+        })
+    </script>
+</head>
+<body>
+    <span id="errMsg"></span>
+    <form action="/register" method="post">
+        <p>用户名： <input type="text" name="username" placeholder="请输入用户名" id="username"</p>
+        <p>密码： <input type="text" name="password" placeholder="请输入密码"></p>
+        <p>确认密码： <input type="text" name="repassword" placeholder="请确认输入密码"></p>
+        <p>邮箱： <input type="text" name="email" placeholder="请输入邮箱"></p>
+        <input type="submit" value="注册" >
+
+    </form>
+    
+</body>
+</html>

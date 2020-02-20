@@ -1,0 +1,39 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图书管理</title>
+    <script src="/static/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+    <div>
+        <a href="/getPageBooks">图书管理</a>
+        <a href="/getOrders">订单管理</a>
+        <a href="/">返回商城</a>
+    </div>
+    <div id="content">
+        <table class="table">
+            <tr>
+                <th>图片</th>
+                <th>书籍</th>
+                <th>作者</th>
+                <th>价格</th>
+                <th>数量</th>
+                <th>金额</th>
+            </tr>
+            {{range .}}
+            <tr>
+                <td> <img src="{{.ImgPath}}" alt="" width="100" height="100"> </td>
+                <td>{{.BookName}}</td>
+                <td>{{.Author}}</td>
+                <td>{{.Price}}</td>
+                <td>{{.Count}}</td>
+                <td>{{.Amount}}</td>
+            </tr>
+            {{end}}
+        </table>
+        
+
+    </div>
+</body>
+</html>

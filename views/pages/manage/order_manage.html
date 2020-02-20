@@ -1,0 +1,50 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图书管理</title>
+    <script src="/static/js/jquery-3.4.1.js"></script>
+</head>
+<body>
+    <div>
+        <a href="/getPageBooks">图书管理</a>
+        <a href="/getOrders">订单管理</a>
+        <a href="/">返回商城</a>
+    </div>
+    <div id="content">
+        <table class="table">
+            <tr>
+                <th>订单号</th>
+                <th>订单时间</th>
+                <th>数量</th>
+                <th>总金额</th>
+                <th>详情</th>
+                <th>操作</th>
+            </tr>
+            {{range .}}
+            <tr>
+                <td>{{.OrderNo}}</td>
+                <td>{{.OrderTime}}</td>
+                <td>{{.TotalCount}}</td>
+                <td>{{.TotalAmount}}</td>
+                <td> <a href="/getOrderInfo?orderNo={{.OrderNo}}">查看详情</a> </td>
+                <td>
+                    {{if .HadSend}}
+                    等待确认收货
+                    {{end}}
+                    {{if .NoSend}}
+                    <a href="/sendOrder?orderNo={{.OrderNo}}">去发货</a>
+                    {{end}}
+                    {{if .Complete}}
+                    已完成
+                    {{end}}
+                    
+                </td>
+            </tr>
+            {{end}}
+        </table>
+        
+
+    </div>
+</body>
+</html>

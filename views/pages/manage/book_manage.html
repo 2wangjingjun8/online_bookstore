@@ -1,0 +1,67 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图书管理</title>
+    <script src="/static/js/jquery-3.4.1.js"></script>
+    <script>
+        $(function(){
+            $(".delBtn").click(function(){
+                var name = $(this).attr("name");
+                return confirm("确认删除【"+name+"】这本图书吗？")
+            })
+        })
+    </script>
+</head>
+<body>
+    <div>
+        <a href="/getPageBooks">图书管理</a>
+        <a href="/getOrders">订单管理</a>
+        <a href="/">返回商城</a>
+    </div>
+    <div id="content">
+        <p> <a href="/toEditPage">添加图书</a> </p>
+        <table class="table">
+            <tr>
+                <th>名称</th>
+                <th>价格</th>
+                <th>作者</th>
+                <th>销量</th>
+                <th>库存</th>
+                <th>操作</th>
+            </tr>
+            {{range .Books}}
+            <tr>
+                <td>{{.BookName}}</td>
+                <td>{{.Price}}</td>
+                <td>{{.Author}}</td>
+                <td>{{.Sales}}</td>
+                <td>{{.Stock}}</td>
+                <td>
+                    <a href="/toEditPage?id={{.ID}}">修改</a>
+                    <a name="{{.BookName}}" class="delBtn" href="/delBook?id={{.ID}}">删除</a>
+                </td>
+            </tr>
+            {{end}}
+        </table>
+        <div id="pagination">
+            {{if .IsHasPre }}
+            <a href="/getPageBooks">首页</a>
+            <a href="/getPageBooks?pageNo={{.GetPrePageNo}}">上一页</a>
+            {{end}}
+            当前页是第{{.CurrentPage}}页，共有{{.TotalPage}}页，共有{{.TotalNum}}记录数
+            {{if .IsHasNext }}
+            <a href="/getPageBooks?pageNo={{.GetNextPageNo}}">下一页</a>
+            <a href="/getPageBooks?pageNo={{.TotalPage}}">末页</a>
+            {{end}}
+            跳转到第 <input class="jumpToPageNo" type="text" value="{{.CurrentPage}}">页 <button id="page_btn">确定</button>
+        </div>
+        <script>
+            $("#page_btn").click(function(){
+                var jumpToPageNo = $(".jumpToPageNo").val();
+                location = "/getPageBooks?pageNo="+jumpToPageNo;
+            })
+        </script>
+    </div>
+</body>
+</html>

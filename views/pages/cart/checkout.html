@@ -1,0 +1,28 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>购物车</title>
+    <style>
+        .btns{float: right;}
+        .header{margin: 10px 20px;}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="/"><img src="./static/images/logo.png" class="logo" alt="logo"></a>
+        
+        <div class="btns">
+            欢迎{{.UserName}}光临小小书城
+            <a href="/showCart">购物车</a>
+            <a href="/logout">注销</a>
+            <a href="/">返回</a>
+        </div>
+
+    </header>
+    <div id="content"  style="width: 800px;margin: 0 auto;text-align: center;">
+        <p> 你的订单已经提交成功！ <h3>订单号是 {{.OrderNo}}  </h3>         </p>
+    </div>
+
+</body>
+</html>
